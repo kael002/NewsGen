@@ -1,0 +1,96 @@
+/* CSS - Shea Parker */
+*,*:after,*:before{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box; 
+}
+#assert{
+    height:300px;
+    overflow: auto;
+}
+.success{
+    color:blue;
+}
+.fail {
+    color:red;
+    text-decoration: line-through;
+}
+
+body {
+    background: #22222A;
+}
+.cellit{
+    position:relative;
+    width:400px;
+    border:1px solid #333;
+    background:#151515;
+    border:5px double #000;
+    border-radius: 20px;
+    padding:20px;
+    box-shadow: inset 6px -6px 30px rgba(0,0,0,.7),inset -6px 6px 25px rgba(255,255,255,0.4);
+    color: #00b300;
+    text-shadow: 0 0 10px #009400;
+
+    perspective: 350px;
+
+    -webkit-perspective: 350px;
+
+}
+
+.cellit:before {
+    position:absolute;
+    content: "";
+    z-index: 3;
+    width:94%;
+    height:100%;
+    left:3%;
+    bottom:10px;
+    background: linear-gradient(to top, 
+    	rgba(0,0,0,0) 0%,
+    	rgba(0,0,0,0) 5%,
+    	rgba(255,255,255,0.23) 5.1%,
+    	rgba(255,200,200,0.23) 12%,
+    	rgba(255,255,255,0.1) 12.7%,
+    	rgba(255,255,255,0.05) 16%,
+    	rgba(255,255,255,0.1) 16.1%,
+    	rgba(200,200,255,0) 31%,
+    	rgba(0,0,0,0) 100%);
+
+    background-position:0% 0%;
+
+
+    transform:rotateY(-4deg);
+    transform-origin:0% 0%;
+    transition: All cubic-bezier(0.67, -0.530, 0.405, 1.425) 2s;
+
+    -webkit-transform: rotateY(-4deg);
+    -webkit-transform-origin:0% 0%;
+    -webkit-transition: All cubic-bezier(0.67, -0.530, 0.405, 1.425) 2s;
+
+}
+
+.cellit:hover:before {
+    background-position:0% -1100px; /* could not get percent to work here */
+
+    transform: rotateY(-40deg);
+    -webkit-transform:rotateY(-40deg);
+}
+
+.cellit:after {
+    position:absolute;
+    width:94%;
+    height:96.5%;
+    left:3%;
+    top:10px;
+    border-radius: 20px;
+    border-top:1px solid rgba(255,255,255,.5);
+    border-right:1px solid rgba(255,255,255,.2);
+    border-bottom:1px solid rgba(0,0,0,.3);
+    border-left:1px solid rgba(0,0,0,.5);
+    box-shadow: inset 0px 0px 20px rgba(0,0,0,.5);
+    content: "";
+
+}
+#news>div{
+    margin-bottom:20px;
+}
