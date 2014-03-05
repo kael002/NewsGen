@@ -5,6 +5,19 @@
 // allow for custom click/hover events
 "use strict";
 (function(BFG){
+	BFG.extend = function(obj){ // I should really put this in a global.js file
+		var args = Array.prototype.slice.call(arguments,1);
+		args.forEach(function(value,index,array){
+			var key ;
+			for (key in value){
+				if (value.hasOwnProperty(key)){
+					obj[key] = value[key];
+				}
+			}
+		});
+		return obj;
+	};
+
 	var Leaderboard = function(o){
 		this.config = BFG.extend({
 			maxDisplay:10,
@@ -18,14 +31,12 @@
 		},o);
 		this.data = [];
 		this.uiList = [];
-		this.run();
-		console.log(this.config);
 	};
-	Leaderboard.prototype = {
-		run:function(){
+	BFG.extend(Leaderboard.prototype,{
+		start:function(){
 
 			console.log('hit');
-			requestAnimationFrame( this.run );
+			//requestAnimationFrame( this.run );
 		},
 		stop:function(){
 			clearInterval(this.timer);
@@ -42,23 +53,9 @@
 			console.log('doTransision');
 			return this;
 		}
-	};
+	});
 
 	BFG.Leaderboard = Leaderboard;
-
-	BFG.extend = function(){
-		var 	result = {},
-			args = Array.prototype.slice.apply(arguments);
-		args.forEach(function(value,index,array){
-			var key ;
-			for (key in value){
-				if (value.hasOwnProperty(key)){
-					result[key] = value[key];
-				}
-			}
-		});
-		return result;
-	};
 
 	Array.prototype.forEach = Array.prototype.forEach || function(callback,context){
 		for(var i = 0,len = this.length;i < len;i++){
@@ -95,3 +92,5 @@
 }());
 
 var test = new BFG.Leaderboard({interval:20});
+console.log(test);
+test.start();
