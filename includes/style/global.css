@@ -42,8 +42,8 @@ body {
 	bottom: 10px;
 }
 
-.cellit:after {
-	position: absolute;
+.cellit:after
+{	position: absolute;
 	width: 94%;
 	height: 96.5%;
 	left: 3%;
