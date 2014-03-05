@@ -10,7 +10,8 @@
 		this.config = BFG.extend({
 			maxDisplay:10,
 			interval:10,
-			elemId:'leaderboard'
+			elemId:'leaderboard',
+			dataCallback:function(){return [];}
 		},o);
 		this.data = [];
 		this.uiList = [];
@@ -43,7 +44,12 @@
 			cancelAnimationFrame(0);
 		},
 		getData:function(){
-			console.log('getData');
+			this.data = this.config.dataCallback();
+			this.data.sort(function(a,b){
+				return a.count - b.count;
+			});
+			this.data =  this.config.maxDisplay > this.data.length?this.data: this.data.slice(0, this.config.maxDisplay);
+			//do something about the uiList when it's shorter than maxDisplay
 			return this;
 		},
 		buildUI:function(){
@@ -60,6 +66,13 @@
 			return this;
 		},
 		doTransition:function(){
+			// *find all ui that no longer exist in data and change (fadein/out) to outstanding data
+			// *animate ui to new positions based on data sort
+			var 	oldElem = [],
+				that = this;
+			this.data.forEach(function(value,index,ary){
+				that.uiList[index].elem.innerHTML = "(" + value.count + ") " + value.title;
+			});
 			console.log('doTransision');
 			return this;
 		}
@@ -73,5 +86,26 @@
 
 
 
-var test = new BFG.Leaderboard({interval:20});
+var test = new BFG.Leaderboard({
+	interval:20,
+	dataCallback:function(){
+		return [//simulates incoming data
+			{title:"Arya Stark",count:BFG.rnd(1,800)},
+			{title:"Sandor Clegane",count:BFG.rnd(1,800)},
+			{title:"Robb Stark",count:BFG.rnd(1,800)},
+			{title:"Bronn",count:BFG.rnd(1,800)},
+			{title:"Tyrion Lannister",count:BFG.rnd(1,800)},
+			{title:"Jon Snow",count:BFG.rnd(1,800)},
+			{title:"Daenerys Targaryen",count:BFG.rnd(1,800)},
+			{title:"Samwell Tarly",count:BFG.rnd(1,800)},
+			{title:"Eddard Stark",count:BFG.rnd(1,800)},
+			{title:"Cersei Lannister",count:BFG.rnd(1,800)},
+			{title:"Catelyn Stark",count:BFG.rnd(1,800)},
+			{title:"Ygritte",count:BFG.rnd(1,800)},
+			{title:"Jaime Lannister",count:BFG.rnd(1,800)},
+			{title:"Bran Stark",count:BFG.rnd(1,800)},
+			{title:"Varys",count:BFG.rnd(1,800)}
+		];
+	}
+});
 test.start();

@@ -23,6 +23,28 @@
 		});
 		return obj;
 	};
+	BFG.rnd = function (min,max){
+		if (min instanceof Array){
+			if(min.length === 0){
+				return undefined;
+			}
+			if(min.length === 1){
+				return min[0];
+			}
+			return min[rnd(0,min.length-1)];
+		}
+		if(typeof min === "object"){
+			min = Object.keys(min);
+			return min[rnd(min.length-1)];
+		}
+		min = min === undefined?100:min;
+		if (!max){
+			max = min;
+			min = 0;
+		}
+		return	Math.floor(Math.random() * (max-min+1) + min);
+	};
+
 	window.BFG = BFG;
 })(window.BFG || {});
 
@@ -51,6 +73,14 @@
             clearTimeout(id);
         };
 }());
+
+Object.keys =Object.keys || function(o) {
+	if (o !== Object(o))
+		throw new TypeError('Object.keys called on a non-object');
+	var k=[],p;
+	for (p in o) if (Object.prototype.hasOwnProperty.call(o,p)) k.push(p);
+	return k;
+};
 
 window.assert = window.assert || function (value,message){
 	if(!message){
