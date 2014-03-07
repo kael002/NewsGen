@@ -44,7 +44,13 @@
 		}
 		return	Math.floor(Math.random() * (max-min+1) + min);
 	};
-
+	BFG.ArrayIndexOf = function(array,value,fn){ //I did not want to override the Array.prototype.indexOf
+		var result = -1;
+		array.forEach(function(v,i,a){
+			result = fn(value,v)?i:result;
+		});
+		return result;
+	};
 	window.BFG = BFG;
 })(window.BFG || {});
 
@@ -103,4 +109,24 @@ Array.prototype.forEach = Array.prototype.forEach || function(callback,context){
 	for(var i = 0,len = this.length;i < len;i++){
 		callback.call(context || null,this[i],i,this);
 	}
+};
+
+Array.prototype.difference = Array.prototype.difference || function(ar,fn){
+	var isInArray,result = [];
+	fn = fn || function(a,b){
+		return a===b;
+	};
+	for(var i = 0,len = this.length;i<len;i++){
+		isInArray = false;
+		for (var x = 0,lenx = ar.length;x<lenx;x++){
+			if (fn(this[i],ar[x])){
+				isInArray = true;
+				break;
+			}
+		}
+		if(!isInArray){
+			result.push(this[i]);
+		}
+	}
+	return result;
 };
